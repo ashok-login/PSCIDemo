@@ -1,8 +1,11 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
+# This is the workflow name
 name: .NET
 
+# "on" keyword specifies that this workflow will be run when GitHub detects a push, or
+# pull_request to this repository, 
 on:
   # push:
   #  branches: [ "master" ]
@@ -12,14 +15,21 @@ on:
 jobs:
   build:
 
+    # means, this job runs on GitHub-hosted runner with the Ubuntu Linux OS.
     runs-on: ubuntu-latest
 
+    # There are 5 steps here.
     steps:
+    # Represents checkout action. It's hosted in the actions repository, which is a
+    # public GitHub repo containing reusable actions. We are calling version 3 of the
+    # checkout action. This will copy the code from the repository onto our runner.
     - uses: actions/checkout@v3
     - name: Setup .NET
+      # This action sets up .NET on the runner, and this will download and install .NET5.
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 5.0.x
+    # Below three steps runs commands on the runner in the Bash shell,
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
